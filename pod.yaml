@@ -1,0 +1,122 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cpd-install-v52x
+spec:
+  containers:
+  - name: olm-utils-v3
+    envFrom:
+    - configMapRef:
+        name: cpd-vars
+    env:
+    - name: OCP_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: cpd-token
+          key: token
+    imagePullPolicy: Always
+    image: registry.example.org/docker/cpopen/cpd/olm-utils-v3:latest
+    command: ["/bin/sh", "-c"]
+    args: 
+      - "/opt/ansible/cpd_install.sh"
+    volumeMounts:
+      - name: olm-utils-storage
+        mountPath: /tmp/work
+      - name: cpd-install-options
+        mountPath: /tmp/work/install-options.yml
+        subPath: install-options.yml
+      - name: cpd-install-options
+        mountPath: /opt/ansible/cpd_install.sh
+        subPath: cpd_install.sh
+      - name: case-00
+        mountPath: /opt/ansible/case.00
+        subPath: case.00
+      - name: case-01
+        mountPath: /opt/ansible/case.01
+        subPath: case.01
+      - name: case-02
+        mountPath: /opt/ansible/case.02
+        subPath: case.02
+      - name: case-03
+        mountPath: /opt/ansible/case.03
+        subPath: case.03
+      - name: case-04
+        mountPath: /opt/ansible/case.04
+        subPath: case.04
+      - name: case-05
+        mountPath: /opt/ansible/case.05
+        subPath: case.05
+      - name: case-06
+        mountPath: /opt/ansible/case.06
+        subPath: case.06
+      - name: case-07
+        mountPath: /opt/ansible/case.07
+        subPath: case.07
+      - name: case-08
+        mountPath: /opt/ansible/case.08
+        subPath: case.08
+      - name: case-09
+        mountPath: /opt/ansible/case.09
+        subPath: case.09
+      - name: case-10
+        mountPath: /opt/ansible/case.10
+        subPath: case.10
+  restartPolicy: Never
+  serviceAccount: ibmce-deployment-sa
+  volumes:
+    - name: olm-utils-storage
+      persistentVolumeClaim:
+        claimName: olm-utils-storage
+    - name: cpd-install-options
+      configMap:
+        defaultMode: 0755
+        name: cpd-install-options
+    - name: case-00
+      secret:
+        defaultMode: 0755
+        secretName: case-00
+    - name: case-01
+      secret:
+        defaultMode: 0755
+        secretName: case-01
+    - name: case-02
+      secret:
+        defaultMode: 0755
+        secretName: case-02
+    - name: case-03
+      secret:
+        defaultMode: 0755
+        secretName: case-03
+    - name: case-04
+      secret:
+        defaultMode: 0755
+        secretName: case-04
+    - name: case-05
+      secret:
+        defaultMode: 0755
+        secretName: case-05
+    - name: case-06
+      secret:
+        defaultMode: 0755
+        secretName: case-06
+    - name: case-07
+      secret:
+        defaultMode: 0755
+        secretName: case-07
+    - name: case-08
+      secret:
+        defaultMode: 0755
+        secretName: case-08
+    - name: case-09
+      secret:
+        defaultMode: 0755
+        secretName: case-09
+    - name: case-10
+      secret:
+        defaultMode: 0755
+        secretName: case-10
+  securityContext:
+    fsGroup: 0
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault

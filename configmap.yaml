@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cpd-vars
+data:
+  PROJECT_LICENSE_SERVICE: "cp4d-np-ibm-licensing"
+  PROJECT_SCHEDULING_SERVICE: "cp4d-np-ibm-scheduling"
+  PROJECT_CPD_INST_OPERATORS: "cp4d-np-ibm-operators"
+  PROJECT_CPD_INST_OPERANDS: "cp4d-np-ibm-instance"
+  OPENSHIFT_TYPE: "self-managed"
+  IBM_ENTITLEMENT_KEY: "<your entitlement key>"
+  COMPONENTS: "analyticsengine"
+  VERSION: "5.2.0"
+  IMAGE_ARCH: "amd64"
+  STG_CLASS_BLOCK: "sc-ontap-nas"
+  STG_CLASS_FILE: "sc-ontap-nas"
+  OCP_URL: "kubernetes.default.svc.cluster.local"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cpd-install-options
+data:
+  install-options.yml: |
+    ################################################################################
+    # IBM Knowledge Catalog parameters
+    ################################################################################
+    #  wkc:
+    #    enableKnowledgeGraph: True
+    #    enableDataQuality: True
+  cpd_install.sh: |
+    #!/bin/bash
+    set -ex
+    cat case.* | base64 -d > /tmp/work/case.tar.gz
+    tar -C /tmp/work -zxf /tmp/work/case.tar.gz
+    ################################################################################
+    # Login to OCP
+    ################################################################################
+    login-to-ocp --token=${OCP_TOKEN} --server=${OCP_URL}
+    ################################################################################
+    # Install License Manager, Certificate Manager and Scheduler
+    ################################################################################
+    apply-cluster-components --release=${VERSION} --license_acceptance=true --licensing_ns=${PROJECT_LICENSE_SERVICE}
+    oc create clusterrolebinding ibm-cpd-scheduling-system-kube-scheduler --clusterrole=system:kube-scheduler --serviceaccount=${PROJECT_SCHEDULING_SERVICE}:ibm-cpd-scheduling-operator
+    oc create clusterrolebinding ibm-cpd-scheduling-system-volume-scheduler --clusterrole=system:volume-scheduler --serviceaccount=${PROJECT_SCHEDULING_SERVICE}:ibm-cpd-scheduling-operator
+    apply-scheduler --release=${VERSION} --license_acceptance=true --scheduler_ns=${PROJECT_SCHEDULING_SERVICE}
+    ################################################################################
+    # Install Cloud Pak for Data
+    ################################################################################
+    authorize-instance-topology --cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
+    setup-instance --release=${VERSION} --license_acceptance=true --cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} --block_storage_class=${STG_CLASS_BLOCK} --file_storage_class=${STG_CLASS_FILE}
+    apply-entitlement --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} --entitlement=cpd-enterprise --production=false
+
+    apply-olm --release=${VERSION} --cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} --components=${COMPONENTS}
+    apply-cr --release=${VERSION} --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} --components=${COMPONENTS} --block_storage_class=${STG_CLASS_BLOCK} --file_storage_class=${STG_CLASS_FILE} --license_acceptance=true
+    get-cpd-instance-details --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} --get_admin_initial_credentials=true
