@@ -3,10 +3,10 @@ kind: ConfigMap
 metadata:
   name: cpd-vars
 data:
-  PROJECT_LICENSE_SERVICE: "cp4d-np-ibm-licensing"
-  PROJECT_SCHEDULING_SERVICE: "cp4d-np-ibm-scheduling"
-  PROJECT_CPD_INST_OPERATORS: "cp4d-np-ibm-operators"
-  PROJECT_CPD_INST_OPERANDS: "cp4d-np-ibm-instance"
+  PROJECT_LICENSE_SERVICE: "ibm-licensing"
+  PROJECT_SCHEDULING_SERVICE: "ibm-scheduling"
+  PROJECT_CPD_INST_OPERATORS: "ibm-operators"
+  PROJECT_CPD_INST_OPERANDS: "ibm-instance"
   OPENSHIFT_TYPE: "self-managed"
   IBM_ENTITLEMENT_KEY: "<your entitlement key>"
   COMPONENTS: "analyticsengine"
