@@ -96,7 +96,7 @@ oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-08.yaml
 oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-09.yaml
 oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-10.yaml
 ```
-10. Update ***spec.containers[0].image*** in **1-pod-shared.yaml** to point to the correct repository/image as necessary for your environment. Create pod to invoke CPD install
+10. Update ***spec.containers[0].image*** in **1-pod-shared.yaml** to point to the correct repository/image as necessary for your environment. Create pod to invoke install of shared components for Cloud Pak for Data.
 ```shell
 oc create -n ${PROJECT_CPD_INST_OPERANDS} -f 1-pod-shared.yaml
 ```
@@ -108,7 +108,7 @@ or
 ```shell
 oc -n ${PROJECT_CPD_INST_OPERANDS} get po -l app=cpd-shared
 ```
-12. Update ***spec.containers[0].image*** in **2-pod-cpd.yaml** to point to the correct repository/image as necessary for your environment. Create pod to invoke CPD install
+12. Update ***spec.containers[0].image*** in **2-pod-cpd.yaml** to point to the correct repository/image as necessary for your environment. Create pod to invoke Cloud Pak for Data install
 ```shell
 oc create -n ${PROJECT_CPD_INST_OPERANDS} -f 2-pod-cpd.yaml
 ```
@@ -120,7 +120,7 @@ or
 ```shell
 oc -n ${PROJECT_CPD_INST_OPERANDS} get po -l app=cpd-install
 ```
-14. Update ***spec.containers[0].image*** in **3-pod-services.yaml** to point to the correct repository/image as necessary for your environment. Create pod to invoke CPD install
+14. Update ***spec.containers[0].image*** in **3-pod-services.yaml** to point to the correct repository/image as necessary for your environment. Create pod to add Cloud Pak for Data services.
 ```shell
 oc create -n ${PROJECT_CPD_INST_OPERANDS} -f 3-pod-services.yaml
 ```
