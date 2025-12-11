@@ -106,7 +106,7 @@ oc logs -n ${PROJECT_CPD_INST_OPERANDS} -f -l app=cpd-shared
 ```
 or 
 ```shell
-oc logs -n ${PROJECT_CPD_INST_OPERANDS} get po -l app=cpd-shared
+oc -n ${PROJECT_CPD_INST_OPERANDS} get po -l app=cpd-shared
 ```
 12. Update ***spec.containers[0].image*** in **2-pod-cpd.yaml** to point to the correct repository/image as necessary for your environment. Create pod to invoke CPD install
 ```shell
@@ -118,7 +118,7 @@ oc logs -n ${PROJECT_CPD_INST_OPERANDS} -f -l app=cpd-install
 ```
 or 
 ```shell
-oc logs -n ${PROJECT_CPD_INST_OPERANDS} get po -l app=cpd-install
+oc -n ${PROJECT_CPD_INST_OPERANDS} get po -l app=cpd-install
 ```
 14. Update ***spec.containers[0].image*** in **3-pod-services.yaml** to point to the correct repository/image as necessary for your environment. Create pod to invoke CPD install
 ```shell
@@ -130,5 +130,5 @@ oc logs -n ${PROJECT_CPD_INST_OPERANDS} -f -l app=cpd-services
 ```
 or 
 ```shell
-oc logs -n ${PROJECT_CPD_INST_OPERANDS} get po -l app=cpd-services
+oc -n ${PROJECT_CPD_INST_OPERANDS} get po -l app=cpd-services
 ```
