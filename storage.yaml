@@ -11,3 +11,93 @@ spec:
     requests:
       storage: 40Gi
   storageClassName: sc-ontap-nas
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: cc-home-pvc
+  annotations:
+    trident.netapp.io/unixPermissions: '777'
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: sc-ontap-nas
+  volumeMode: Filesystem
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: conn-home-pvc
+  annotations:
+    trident.netapp.io/unixPermissions: '777'
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: sc-ontap-nas
+  volumeMode: Filesystem
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  annotations:
+    trident.netapp.io/unixPermissions: '777'
+  name: file-api-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: sc-ontap-nas
+  volumeMode: Filesystem
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  annotations:
+    trident.netapp.io/unixPermissions: '777'
+  name: ws-runtimes-libs-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 3Gi
+  storageClassName: sc-ontap-nas
+  volumeMode: Filesystem
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  annotations:
+    trident.netapp.io/unixPermissions: '777'
+  name: wml-manager-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: sc-ontap-nas
+  volumeMode: Filesystem
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  annotations:
+    trident.netapp.io/unixPermissions: '777'
+  name: aiopenscale-ibm-aios-payload-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 4Gi
+  storageClassName: sc-ontap-nas
+  volumeMode: Filesystem

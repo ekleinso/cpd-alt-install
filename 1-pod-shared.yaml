@@ -1,7 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: cpd-install-v52x
+  name: cpd-shared-v52x
+  labels:
+    app: cpd-shared
 spec:
   containers:
   - name: olm-utils-v3
@@ -18,7 +20,7 @@ spec:
     image: registry.example.org/docker/cpopen/cpd/olm-utils-v3:latest
     command: ["/bin/sh", "-c"]
     args: 
-      - "/opt/ansible/cpd_install.sh"
+      - "/opt/ansible/cpd_shared.sh"
     volumeMounts:
       - name: olm-utils-storage
         mountPath: /tmp/work
@@ -26,8 +28,8 @@ spec:
         mountPath: /tmp/work/install-options.yml
         subPath: install-options.yml
       - name: cpd-install-options
-        mountPath: /opt/ansible/cpd_install.sh
-        subPath: cpd_install.sh
+        mountPath: /opt/ansible/cpd_shared.sh
+        subPath: cpd_shared.sh
       - name: case-00
         mountPath: /opt/ansible/case.00
         subPath: case.00

@@ -7,7 +7,7 @@ oc login
 ```
 2. Clone repo to the client workstation or download as a zip from git.
 ```shell
-git clone https://github.com/ekleinso/cpd-alt-install.git
+git clone -b v2 https://github.com/ekleinso/cpd-alt-install.git
 ```
 3. Change into directory ***cpd-alt-install***.
 ```shell
@@ -51,6 +51,7 @@ data:
   STG_CLASS_BLOCK: "sc-ontap-nas"
   STG_CLASS_FILE: "sc-ontap-nas"
   OCP_URL: "kubernetes.default.svc.cluster.local"
+  OLM_UTILS_IMAGE: "registry.example.org/docker/cpopen/cpd/olm-utils-v3:latest"
 ```
 
 ```shell
@@ -76,23 +77,7 @@ subjects:
 ```shell
 oc create -n ${PROJECT_CPD_INST_OPERANDS} -f rolebindings.yaml
 ```
-8. Update value for ***storageClassName*** in **storage.yaml** if you changed the ***STG_CLASS_FILE*** variable in **configmap.yaml**
-```yaml
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: olm-utils-storage
-  annotations:
-    trident.netapp.io/unixPermissions: '777'
-spec:
-  accessModes:
-  - ReadWriteMany
-  resources:
-    requests:
-      storage: 40Gi
-  storageClassName: sc-ontap-nas
-```
-
+8. Update value for ***storageClassName*** in all of the entries in **storage.yaml** if you changed the ***STG_CLASS_FILE*** variable in **configmap.yaml** before you run command to create storage.
 ```shell
 oc create -n ${PROJECT_CPD_INST_OPERANDS} -f storage.yaml
 ```
@@ -111,16 +96,39 @@ oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-08.yaml
 oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-09.yaml
 oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-10.yaml
 ```
-10. Update ***spec.containers[0].image*** in **pod.yaml** to point to the correct repository/image as necessary for your environment. Create pod to invoke CPD install
+10. Update ***spec.containers[0].image*** in **1-pod-shared.yaml** to point to the correct repository/image as necessary for your environment. Create pod to invoke CPD install
 ```shell
-oc create -n ${PROJECT_CPD_INST_OPERANDS} -f pod.yaml
+oc create -n ${PROJECT_CPD_INST_OPERANDS} -f 1-pod-shared.yaml
 ```
 11. Monitor install log and/or check pod status until it is completed
 ```shell
-oc logs -n ${PROJECT_CPD_INST_OPERANDS} -f cpd-install-v52x
+oc logs -n ${PROJECT_CPD_INST_OPERANDS} -f -l app=cpd-shared
 ```
 or 
 ```shell
-oc logs -n ${PROJECT_CPD_INST_OPERANDS} get po cpd-install-v52x
+oc logs -n ${PROJECT_CPD_INST_OPERANDS} get po -l app=cpd-shared
 ```
-
+12. Update ***spec.containers[0].image*** in **2-pod-cpd.yaml** to point to the correct repository/image as necessary for your environment. Create pod to invoke CPD install
+```shell
+oc create -n ${PROJECT_CPD_INST_OPERANDS} -f 2-pod-cpd.yaml
+```
+13. Monitor install log and/or check pod status until it is completed
+```shell
+oc logs -n ${PROJECT_CPD_INST_OPERANDS} -f -l app=cpd-install
+```
+or 
+```shell
+oc logs -n ${PROJECT_CPD_INST_OPERANDS} get po -l app=cpd-install
+```
+14. Update ***spec.containers[0].image*** in **3-pod-services.yaml** to point to the correct repository/image as necessary for your environment. Create pod to invoke CPD install
+```shell
+oc create -n ${PROJECT_CPD_INST_OPERANDS} -f 3-pod-services.yaml
+```
+15. Monitor install log and/or check pod status until it is completed
+```shell
+oc logs -n ${PROJECT_CPD_INST_OPERANDS} -f -l app=cpd-services
+```
+or 
+```shell
+oc logs -n ${PROJECT_CPD_INST_OPERANDS} get po -l app=cpd-services
+```
