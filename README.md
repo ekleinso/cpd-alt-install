@@ -45,7 +45,7 @@ data:
   PROJECT_CPD_INST_OPERANDS: "ibm-instance"
   OPENSHIFT_TYPE: "self-managed"
   IBM_ENTITLEMENT_KEY: "<your entitlement key>"
-  COMPONENTS: "analyticsengine"
+  COMPONENTS: "factsheet,analyticsengine,datarefinery,datastage_ent,dmc,wkc,ws_pipelines,wml,openscale,ws,hee"
   VERSION: "5.2.0"
   IMAGE_ARCH: "amd64"
   STG_CLASS_BLOCK: "sc-ontap-nas"
@@ -120,7 +120,7 @@ or
 ```shell
 oc -n ${PROJECT_CPD_INST_OPERANDS} get po -l app=cpd-install
 ```
-14. Update ***spec.containers[0].image*** in **3-pod-services.yaml** to point to the correct repository/image as necessary for your environment. Create pod to add Cloud Pak for Data services.
+14. Update ***spec.containers[0].image*** in **3-pod-services.yaml** to point to the correct repository/image as necessary for your environment. Create pod to add Cloud Pak for Data components.
 ```shell
 oc create -n ${PROJECT_CPD_INST_OPERANDS} -f 3-pod-services.yaml
 ```
