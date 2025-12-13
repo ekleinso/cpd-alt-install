@@ -7,7 +7,7 @@ oc login
 ```
 2. Clone repo to the client workstation or download as a zip from git.
 ```shell
-git clone -b v2 https://github.com/ekleinso/cpd-alt-install.git
+git clone -b v522 https://github.com/ekleinso/cpd-alt-install.git
 ```
 3. Change into directory ***cpd-alt-install***.
 ```shell
@@ -46,7 +46,7 @@ data:
   OPENSHIFT_TYPE: "self-managed"
   IBM_ENTITLEMENT_KEY: "<your entitlement key>"
   COMPONENTS: "factsheet,analyticsengine,datarefinery,datastage_ent,dmc,wkc,ws_pipelines,wml,openscale,ws,hee"
-  VERSION: "5.2.0"
+  VERSION: "5.2.2"
   IMAGE_ARCH: "amd64"
   STG_CLASS_BLOCK: "sc-ontap-nas"
   STG_CLASS_FILE: "sc-ontap-nas"
@@ -95,6 +95,15 @@ oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-07.yaml
 oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-08.yaml
 oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-09.yaml
 oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-10.yaml
+oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-11.yaml
+oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-12.yaml
+oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-13.yaml
+oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-14.yaml
+oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-15.yaml
+oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-16.yaml
+oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-17.yaml
+oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-18.yaml
+oc create -n ${PROJECT_CPD_INST_OPERANDS} -f case-19.yaml
 ```
 10. Update ***spec.containers[0].image*** in **1-pod-shared.yaml** to point to the correct repository/image as necessary for your environment. Create pod to invoke install of shared components for Cloud Pak for Data.
 ```shell

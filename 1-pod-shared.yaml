@@ -17,7 +17,7 @@ spec:
           name: cpd-token
           key: token
     imagePullPolicy: Always
-    image: registry.example.org/docker/cpopen/cpd/olm-utils-v3:latest
+    image: artifactory.example.org/docker/cpopen/cpd/olm-utils-v3:latest
     command: ["/bin/sh", "-c"]
     args: 
       - "/opt/ansible/cpd_shared.sh"
@@ -63,6 +63,33 @@ spec:
       - name: case-10
         mountPath: /opt/ansible/case.10
         subPath: case.10
+      - name: case-11
+        mountPath: /opt/ansible/case.11
+        subPath: case.11
+      - name: case-12
+        mountPath: /opt/ansible/case.12
+        subPath: case.12
+      - name: case-13
+        mountPath: /opt/ansible/case.13
+        subPath: case.13
+      - name: case-14
+        mountPath: /opt/ansible/case.14
+        subPath: case.14
+      - name: case-15
+        mountPath: /opt/ansible/case.15
+        subPath: case.15
+      - name: case-16
+        mountPath: /opt/ansible/case.16
+        subPath: case.16
+      - name: case-17
+        mountPath: /opt/ansible/case.17
+        subPath: case.17
+      - name: case-18
+        mountPath: /opt/ansible/case.18
+        subPath: case.18
+      - name: case-19
+        mountPath: /opt/ansible/case.19
+        subPath: case.19
   restartPolicy: Never
   serviceAccount: ibmce-deployment-sa
   volumes:
@@ -117,6 +144,42 @@ spec:
       secret:
         defaultMode: 0755
         secretName: case-10
+    - name: case-11
+      secret:
+        defaultMode: 0755
+        secretName: case-11
+    - name: case-12
+      secret:
+        defaultMode: 0755
+        secretName: case-12
+    - name: case-13
+      secret:
+        defaultMode: 0755
+        secretName: case-13
+    - name: case-14
+      secret:
+        defaultMode: 0755
+        secretName: case-14
+    - name: case-15
+      secret:
+        defaultMode: 0755
+        secretName: case-15
+    - name: case-16
+      secret:
+        defaultMode: 0755
+        secretName: case-16
+    - name: case-17
+      secret:
+        defaultMode: 0755
+        secretName: case-17
+    - name: case-18
+      secret:
+        defaultMode: 0755
+        secretName: case-18
+    - name: case-19
+      secret:
+        defaultMode: 0755
+        secretName: case-19
   securityContext:
     fsGroup: 0
     runAsNonRoot: true
